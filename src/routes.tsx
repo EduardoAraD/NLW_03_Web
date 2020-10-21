@@ -5,6 +5,10 @@ import Landing from './pages/Landing';
 import OrphanagesMap from './pages/OrphanagesMap';
 import Orphanage from './pages/Orphanage';
 import CreateOrphanage from './pages/CreateOrphanage'
+import Login from './pages/Login'
+import ForgotPassword from './pages/ForgotPassword'
+import ResetPassword from './pages/ResetPassword'
+import Dashboard from './pages/Dashboard'
 
 function Routes() {
     return (
@@ -12,6 +16,10 @@ function Routes() {
             <Switch>
                 <Route path="/" exact component={Landing} />
                 <Route path="/app" component={OrphanagesMap} />
+                <Route path="/login" component={Login} />
+                <Route path="/forgot-password" component={ForgotPassword} />
+                <Route path="/reset-password/:id" component={ResetPassword} />
+                <Route path="/dashboard" component={Dashboard} />
                 <Route path="/orphanages/create" component={CreateOrphanage} />
                 <Route path="/orphanages/:id" component={Orphanage} />
             </Switch>
