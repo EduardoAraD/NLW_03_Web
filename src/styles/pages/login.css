@@ -1,0 +1,198 @@
+#page-login {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+}
+
+#page-login .content-form{
+    
+    display: flex;
+    flex: 1;
+
+    background-color: #FFFFFF;
+    justify-content: center;
+    align-items: center;
+}
+
+.content-form .to-back {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    width: 48px;
+    height: 48px;
+    background: #EBF2F5;
+    border-radius: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: background-color 0.2s;
+    margin-top: 40px;
+    margin-right: 43px;
+}
+
+.content-form .to-back:hover{
+    background-color: #96FEFF;
+}
+
+.content-form .form-login {
+    flex-direction: column;
+    justify-content: flex-start;
+    
+    width: auto;
+    max-width: 300px;
+}
+
+.content-form .form-login h2{
+    font-weight: 800;
+    color: #5C8599;
+    margin-bottom: 20px;
+}
+
+.content-form .form-login .input-block + .input-block {
+    margin-top: 20px;
+}
+  
+.content-form .form-login .input-block label {
+    display: flex;
+    color: #8FA7B3;
+    margin-bottom: 8px;
+    line-height: 20px;
+}
+  
+.content-form .form-login .input-block label span {
+    font-size: 14px;
+    color: #8FA7B3;
+    line-height: 20px;
+}
+  
+.content-form .form-login .input-block input {
+    width: 100%;
+    background: #F5F8FA;
+    border: 1px solid #D3E2E5;
+    border-radius: 20px;
+    outline: none;
+    color: #5C8599;
+}
+  
+.content-form .form-login .input-block input {
+    height: 60px;
+    padding: 0 16px;
+}
+
+.content-form .form-login .content-check {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    color: #8FA7B3;
+    font-size: 15px;
+    font-weight: 600;
+    margin-top: 15px;
+}
+
+.content-form .form-login .content-check .check-input {
+    display: flex;
+}
+
+ /* Customize the label (the container) */
+ .content-form .form-login .content-check .check-input {
+    display: block;
+    position: relative;
+    padding-left: 23px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* Hide the browser's default checkbox */
+  .content-form .form-login .content-check .check-input input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  /* Create a custom checkbox */
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #ededed;
+    border-radius: 4px;
+    border: 1px solid #D3E2E5;
+  }
+  
+  /* On mouse-over, add a grey background color */
+  .content-form .form-login .content-check .check-input:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+  
+  /* When the checkbox is checked, add a blue background */
+  .content-form .form-login .content-check .check-input input:checked ~ .checkmark {
+    background-color: #36CF82;
+  }
+  
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  /* Show the checkmark when checked */
+  .content-form .form-login .content-check .check-input input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  /* Style the checkmark/indicator */
+  .content-form .form-login .content-check .check-input .checkmark:after {
+    left: 6px;
+    top: 2px;
+    width: 3px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  } 
+
+
+.content-form .form-login .content-check a {
+    text-decoration: none;
+    color: #8FA7B3;
+}
+
+.content-form .form-login button {
+    margin-top: 40px;
+      
+    width: 100%;
+    height: 64px;
+    border: 0;
+    cursor: pointer;
+    background: #3CDC8C;
+    border-radius: 20px;
+    color: #FFFFFF;
+    font-weight: 800;
+      
+    display: flex;
+    justify-content: center;
+    align-items: center;
+      
+    transition: background-color 0.2s;
+}
+
+.content-form .form-login button:hover {
+    background: #36CF82;
+}
+
+
