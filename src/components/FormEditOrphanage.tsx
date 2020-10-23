@@ -58,12 +58,12 @@ export default function FormEditOrphanage({
   }
 
   return (
-    <form className="create-orphanage-form">
+    <form className="edit-orphanage-form">
       <fieldset>
         <legend>Dados</legend>
 
         <Map
-          center={[-3.7353647, -38.6634685]}
+          center={[position.latitude, position.longitude]}
           style={{ width: '100%', height: 280 }}
           zoom={15}
           onclick={handleMapClick}
