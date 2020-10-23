@@ -2,13 +2,20 @@ import React, { useState } from 'react'
 import { Map, Marker, TileLayer } from "react-leaflet";
 import { FiAlertCircle, FiPower, FiMapPin, FiEdit3, FiTrash } from 'react-icons/fi'
 
+import { useAuth } from '../contexts/auth'
+
 import mapMarkerImg from '../images/map-marker.svg';
 import mapIcon from "../utils/mapIcon";
 import '../styles/pages/dashboard.css'
 
 export default function Dashboard() {
+    const { signOut } = useAuth();
 
     const [viewCadastro, setViewCadastro] = useState(true)
+
+    function handleSignOut(){
+        signOut()
+    }
 
     return (
         <div id="page-dashboard">
@@ -25,7 +32,7 @@ export default function Dashboard() {
                     </button>
                 </div>
                 <footer>
-                    <button type="button">
+                    <button type="button" onClick={handleSignOut}>
                         <FiPower size={24} color="#FFF" />
                     </button>
                 </footer>
