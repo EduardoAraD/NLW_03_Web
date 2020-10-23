@@ -10,13 +10,13 @@
     margin: 64px 0px;
 }
 
-.content-edit-page .title {
+#page-edit-orphanage .content-edit-page .title {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.content-edit-page .title span {
+#page-edit-orphanage .content-edit-page .title span {
     color: #5C8599;
     font-weight: 600;
 }
@@ -25,4 +25,90 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#page-edit-orphanage .content-edit-page .edit-form-container {
+    margin: 64px auto;
+  
+    background: #FFFFFF;
+    border: 1px solid #D3E2E5;
+    border-radius: 20px;
+}
+
+#page-edit-orphanage .content-edit-page .edit-form-container button[type='submit'] {
+    width: -moz-available;
+    height: 64px;
+    border: 0;
+    cursor: pointer;
+    background: #3CDC8C;
+    border-radius: 20px;
+    color: #FFFFFF;
+    font-weight: 800;
+
+    margin: 0px 80px;
+    margin-bottom: 64px;
+  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    transition: background-color 0.2s;
+}
+  
+#page-edit-orphanage .content-edit-page .edit-form-container button[type='submit']:hover {
+    background: #36CF82;
+}
+
+#page-edit-orphanage .content-edit-page .edit-form-container .buttons-content {
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin: 0px 80px;
+    margin-bottom: 64px;
+
+}
+
+.buttons-content .dont-button{
+    height: 64px;
+    width: 264px;
+    padding: 0px 50px;
+    
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    background: #FF669D;
+    color: #FFFFFF;
+    border-radius: 20px;
+    border: 0;
+
+    font-weight: 800;
+
+    transition: background-color 0.2s;
+}
+.buttons-content .dont-button:hover{
+    background: #FF75A7;
+}
+.buttons-content .conf-button{
+    height: 64px;
+    width: 264px;
+    padding: 0px 50px;
+    
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    background: #3CDC8C;
+    color: #FFFFFF;
+    border-radius: 20px;
+    border: 0;
+
+    font-weight: 800;
+
+    transition: background-color 0.2s;
+}
+.buttons-content .conf-button:hover{
+    background: #3BD689;
 }
