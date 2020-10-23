@@ -49,7 +49,9 @@ export default function Orphanage() {
 
       <main>
         <div className="orphanage-details">
-          <img src={orphanage.images[activeImageIndex].url} alt={orphanage.name} />
+          {orphanage.images.length > 0 ? (
+            <img src={orphanage.images[activeImageIndex].url} alt={orphanage.name} />
+          ): '' }
 
           <div className="images">
             {orphanage.images.map((image, index) => {

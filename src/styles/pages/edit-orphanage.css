@@ -1,0 +1,28 @@
+#page-edit-orphanage {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+}
+
+#page-edit-orphanage .content-edit-page {
+    flex: 1;
+    margin: 64px 0px;
+}
+
+.content-edit-page .title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content-edit-page .title span {
+    color: #5C8599;
+    font-weight: 600;
+}
+  
+#page-edit-orphanage .content-edit-page main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
