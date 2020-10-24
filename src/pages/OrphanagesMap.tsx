@@ -14,15 +14,33 @@ interface Orphanage {
     name: string;
     latitude: number;
     longitude: number;
+    pending: boolean;
 }
 
 function OrphanagesMap() {
     const [orphanages, setOrphanages] = useState<Orphanage[]>([]);
+    const [latitude, setLatitude] = useState(-3.7362212)
+    const [longitude, setLongitude] = useState(-38.6569453)
 
     useEffect(() => {
         api.get('orphanages').then(response => {
-            setOrphanages(response.data)
+            const data = response.data as Orphanage[];
+
+            const orphanagesData = data.filter(orphanage => {
+                if (orphanage.pending)
+                    return orphanage
+            })
+
+            setOrphanages(orphanagesData)
         })
+
+        if (navigator.geolocation) {
+            navigator.geolocation.watchPosition(function (position) {
+                setLatitude(position.coords.latitude)
+                setLongitude(position.coords.longitude)
+            });
+        }
+
     }, [])
 
     return (
@@ -41,28 +59,28 @@ function OrphanagesMap() {
                 </footer>
             </aside>
 
-            <Map 
-                center={[-3.7353647,-38.6634685]}
+            <Map
+                center={[latitude, longitude]}
                 zoom={15}
-                style={{ width: '100%', height: '100%'}}
+                style={{ width: '100%', height: '100%' }}
             >
                 {/*<TileLayer url="https://a.tile.openstreetmap.org/{z}/{x}/{y}.png" /> */}
-                <TileLayer 
+                <TileLayer
                     url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
                 />
                 {orphanages.map(orphanage => {
-                    return <Marker 
-                    icon={mapIcon}
-                    position={[orphanage.latitude,orphanage.longitude]}
-                    key={orphanage.id}
-                >
-                    <Popup closeButton={false} minWidth={240} maxWidth={240} className="map-popup" >
-                        {orphanage.name}
-                        <Link to={`/orphanages/${orphanage.id}`}>
-                            <FiArrowRight size={20} color='#FFF' />
-                        </Link>
-                    </Popup>
-                </Marker>
+                    return <Marker
+                        icon={mapIcon}
+                        position={[orphanage.latitude, orphanage.longitude]}
+                        key={orphanage.id}
+                    >
+                        <Popup closeButton={false} minWidth={240} maxWidth={240} className="map-popup" >
+                            {orphanage.name}
+                            <Link to={`/orphanages/${orphanage.id}`}>
+                                <FiArrowRight size={20} color='#FFF' />
+                            </Link>
+                        </Popup>
+                    </Marker>
                 })}
             </Map>
 
