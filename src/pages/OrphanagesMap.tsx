@@ -26,10 +26,7 @@ function OrphanagesMap() {
         api.get('orphanages').then(response => {
             const data = response.data as Orphanage[];
 
-            const orphanagesData = data.filter(orphanage => {
-                if (orphanage.pending)
-                    return orphanage
-            })
+            const orphanagesData = data.filter(orphanage => orphanage.pending )
 
             setOrphanages(orphanagesData)
         })
