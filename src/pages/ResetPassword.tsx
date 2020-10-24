@@ -1,14 +1,35 @@
 import React, { useState } from "react";
-import { Link } from 'react-router-dom'
+import { Link, useParams, useHistory } from 'react-router-dom'
 import { FiArrowLeft, FiEye, FiEyeOff } from 'react-icons/fi'
 
 import LandingLogo from '../components/LandingLogo'
 import '../styles/pages/reset-password.css'
+import api from "../services/api";
+
+interface ParamsResetParams{
+    id: string;
+}
 
 export default function ResetPassword() {
+    const params = useParams<ParamsResetParams>();
+    const history = useHistory();
 
+    const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
     const [visiblePassword, setVisiblePassword] = useState(false)
     const [visibleConfirmPassword, setVisibleConfirmPassword] = useState(false)
+
+    async function handleSubmit(){
+        try{
+            await api.post('/reset_password',{ password, confirmPassword, token: params.id})
+
+            alert('Sua nova senha foi registrada com sucesso!')
+
+            history.push('/login')
+        } catch(err) {
+            alert(err.response.data.error)
+        }
+    }
 
     return (
         <div id="page-reset">
@@ -24,7 +45,9 @@ export default function ResetPassword() {
                         <label htmlFor="password">Nova Senha</label>
                         <div>
                             <input type={visiblePassword ? 'text' : 'password'}
-                                id="password" />
+                                value={password}
+                                id="password"
+                                onChange={event => setPassword(event.target.value)} />
                             <span className="lnr-eye"
                                 onClick={() => { setVisiblePassword(!visiblePassword) }} >
                                 { visiblePassword? (
@@ -39,7 +62,9 @@ export default function ResetPassword() {
                         <label htmlFor="confirmPassword">Repetir senha</label>
                         <div>
                             <input type={visibleConfirmPassword ? 'text' : 'password'}
-                                id="confirmPassword" />
+                                id="confirmPassword"
+                                value={confirmPassword}
+                                onChange={event => setConfirmPassword(event.target.value)} />
                             <span className="lnr-eye"
                                 onClick={() => { setVisibleConfirmPassword(!visibleConfirmPassword) }} >
                                 { visibleConfirmPassword? (
@@ -52,6 +77,7 @@ export default function ResetPassword() {
                     </div>
                     <button className="button"
                         type="button"
+                        onClick={handleSubmit}
                     >Entrar</button>
                 </div>
             </div>
