@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { Map, Marker, TileLayer } from "react-leaflet";
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { FiAlertCircle, FiPower, FiMapPin, FiEdit3, FiTrash, FiArrowRight } from 'react-icons/fi'
 
 import { useAuth } from '../contexts/auth'
+import Orphanage from './Orphanage';
+import NotOrphanage from '../components/NotOrphanage';
 
 import mapMarkerImg from '../images/map-marker.svg';
 import mapIcon from "../utils/mapIcon";
 import '../styles/pages/dashboard.css'
 import api from '../services/api';
-import Orphanage from './Orphanage';
 
 interface Orphanage {
     id: number;
@@ -20,6 +21,7 @@ interface Orphanage {
 }
 
 export default function Dashboard() {
+    const history = useHistory();
     const { signOut } = useAuth();
 
     const [viewCadastro, setViewCadastro] = useState(true)
@@ -30,14 +32,9 @@ export default function Dashboard() {
         api.get('orphanages').then(response => {
             const data = response.data as Orphanage[];
 
-            const orphanagesRegister = data.filter(orphanage => {
-                if (orphanage.pending)
-                    return orphanage
-            })
+            const orphanagesRegister = data.filter( orphanage => orphanage.pending )
 
-            const orphanagesPending = data.filter(orphanage => {
-                if (!orphanage.pending) return orphanage
-            })
+            const orphanagesPending = data.filter(orphanage => !orphanage.pending )
 
             setOrphanagesRegisted(orphanagesRegister)
             setOrphanagesPending(orphanagesPending)
@@ -47,6 +44,16 @@ export default function Dashboard() {
 
     function handleSignOut() {
         signOut()
+    }
+
+    async function handleDelete(id: number) {
+        try{
+            await api.delete(`/orphanages/${id}`)
+
+            history.push('/orphanage-delete')
+        } catch(e) {
+            alert('Não foi possível fazer a remoção do orfanato.')
+        }
     }
 
     return (
@@ -72,72 +79,82 @@ export default function Dashboard() {
             <div className="content-page">
                 <div className="title">
                     <h2>{viewCadastro ? "Orfanatos Cadastrados" : "Cadastros Pendentes"}</h2>
-                    <p>2 orfanatos</p>
+                    <p>{viewCadastro ? orphanagesRegisted.length : orphanagesPending.length} orfanatos</p>
                 </div>
-                <div className="content-cards">
-                    {viewCadastro ? orphanagesRegisted.map(orphanage => {
-                        return (
-                            <div className="card">
-                                <Map
-                                    center={[orphanage.latitude, orphanage.longitude]}
-                                    zoom={16}
-                                    style={{ width: '100%', height: 280 }}
-                                    dragging={false}
-                                    touchZoom={false}
-                                    zoomControl={false}
-                                    scrollWheelZoom={false}
-                                    doubleClickZoom={false}
-                                >
-                                    <TileLayer
-                                        url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
-                                    />
-                                    <Marker interactive={false} icon={mapIcon} position={[orphanage.latitude, orphanage.longitude]} />
-                                </Map>
+                <div className={viewCadastro? (
+                    orphanagesRegisted.length > 0 ? "content-cards" : "content-not-orphanage"
+                ): (
+                    orphanagesPending.length > 0 ? "content-cards" : "content-not-orphanage"
+                )} >
+                    {viewCadastro ? (
+                        orphanagesRegisted.length ?
+                            orphanagesRegisted.map(orphanage => {
+                                return (
+                                    <div className="card" key={orphanage.id}>
+                                        <Map
+                                            center={[orphanage.latitude, orphanage.longitude]}
+                                            zoom={16}
+                                            style={{ width: '100%', height: 280 }}
+                                            dragging={false}
+                                            touchZoom={false}
+                                            zoomControl={false}
+                                            scrollWheelZoom={false}
+                                            doubleClickZoom={false}
+                                        >
+                                            <TileLayer
+                                                url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
+                                            />
+                                            <Marker interactive={false} icon={mapIcon} position={[orphanage.latitude, orphanage.longitude]} />
+                                        </Map>
 
-                                <div className="card-footer">
-                                    <p>{orphanage.name}</p>
-                                    <div>
-                                        <Link to={`/orphanages/edit/${orphanage.id}`}>
-                                            <FiEdit3 size={20} color="#12AFCB" />
-                                        </Link>
-                                        <Link to="/">
-                                            <FiTrash size={20} color="#12AFCB" />
-                                        </Link>
+                                        <div className="card-footer">
+                                            <p>{orphanage.name}</p>
+                                            <div>
+                                                <Link to={`/orphanages/edit/${orphanage.id}`}>
+                                                    <FiEdit3 size={20} color="#12AFCB" />
+                                                </Link>
+                                                <button type="button" 
+                                                    onClick={() => handleDelete(orphanage.id)}>
+                                                    <FiTrash size={20} color="#12AFCB" />
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        )
-                    }) : orphanagesPending.map(orphanage => {
-                        return (
-                            <div className="card">
-                                <Map
-                                    center={[orphanage.latitude, orphanage.longitude]}
-                                    zoom={16}
-                                    style={{ width: '100%', height: 280 }}
-                                    dragging={false}
-                                    touchZoom={false}
-                                    zoomControl={false}
-                                    scrollWheelZoom={false}
-                                    doubleClickZoom={false}
-                                >
-                                    <TileLayer
-                                        url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
-                                    />
-                                    <Marker interactive={false} icon={mapIcon} position={[orphanage.latitude, orphanage.longitude]} />
-                                </Map>
+                                )
+                            }) : <NotOrphanage />
+                    ) : (
+                            orphanagesPending.length ? orphanagesPending.map(orphanage => {
+                                return (
+                                    <div className="card" key={orphanage.id} >
+                                        <Map
+                                            center={[orphanage.latitude, orphanage.longitude]}
+                                            zoom={16}
+                                            style={{ width: '100%', height: 280 }}
+                                            dragging={false}
+                                            touchZoom={false}
+                                            zoomControl={false}
+                                            scrollWheelZoom={false}
+                                            doubleClickZoom={false}
+                                        >
+                                            <TileLayer
+                                                url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
+                                            />
+                                            <Marker interactive={false} icon={mapIcon} position={[orphanage.latitude, orphanage.longitude]} />
+                                        </Map>
 
-                                <div className="card-footer">
-                                    <p>{orphanage.name}</p>
-                                    <div>
-                                        <Link to={`/orphanages/pending/${orphanage.id}`} >
-                                            <FiArrowRight size={20} color="#12AFCB" />
-                                        </Link>
+                                        <div className="card-footer">
+                                            <p>{orphanage.name}</p>
+                                            <div>
+                                                <Link to={`/orphanages/pending/${orphanage.id}`} >
+                                                    <FiArrowRight size={20} color="#12AFCB" />
+                                                </Link>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
+                                )
+                            }) : <NotOrphanage />
                         )
-                    })}
-
+                    }
                 </div>
             </div>
         </div>

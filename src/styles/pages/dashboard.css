@@ -59,7 +59,8 @@ aside.sidebar div .marker:hover {
 }
 
 #page-dashboard .content-page{
-    flex: 1;
+    height: 100%;
+    width: 100%;
     padding: 40px 80px;
     margin: 0;
 }
@@ -87,9 +88,16 @@ aside.sidebar div .marker:hover {
 }
 
 .content-page .content-cards {
-    flex: 1;
     display: grid;
     grid-template-columns: 1fr 1fr;
+}
+
+.content-page .content-not-orphanage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 90%;
 }
 
 .content-page .content-cards .card {
@@ -129,13 +137,15 @@ aside.sidebar div .marker:hover {
     flex-direction: row;
 }
 
-.content-page .content-cards .card .card-footer div a {
+.content-page .content-cards .card .card-footer div a,
+.content-page .content-cards .card .card-footer div button {
     height: 48px;
     width: 48px;
     border-radius: 10px;
     margin: 0 5px;
 
     background: #EBF2F5;
+    border: 0;
 
     display: flex;
     align-items: center;
@@ -144,6 +154,7 @@ aside.sidebar div .marker:hover {
     transition: background-color 0.2s;
 }
 
-.content-page .content-cards .card .card-footer div a:hover {
+.content-page .content-cards .card .card-footer div a:hover,
+.content-page .content-cards .card .card-footer div button:hover {
     background: #96FEFF;
 }
