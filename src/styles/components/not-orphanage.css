@@ -1,0 +1,12 @@
+.not-orphanage {
+    display: flex;
+    flex-direction: column;
+}
+
+.not-orphanage p {
+    color: #5C8599;
+    font-weight: 800;
+    margin: 10px;
+}
+
+
