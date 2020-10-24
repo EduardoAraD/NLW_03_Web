@@ -51,11 +51,8 @@ export default function PendingOrphanage() {
       setOpeningHours(opening_hours)
       setOpenOnWeekends(open_on_weekends)
 
-      var imagesUrl: string[] = [];
-
-      images.map(image => {
-        imagesUrl.push(image.url)
-      })
+      const imagesUrl = images.map(image => image.url)
+      
       setPreviewImages(imagesUrl)
 
     })
